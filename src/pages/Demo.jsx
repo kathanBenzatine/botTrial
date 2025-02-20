@@ -40,6 +40,7 @@ export default function Demo() {
         PLAY
       </button>
       <button
+        style={{ background: "red" }}
         className="
       col-6"
         onClick={() => {
