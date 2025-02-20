@@ -1,7 +1,9 @@
 import WebApp from "@twa-dev/sdk";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo() {
+  const navigate = useNavigate();
   const initiatePayment = () => {
     // try {
     //   WebApp.openInvoice(
@@ -31,10 +33,20 @@ export default function Demo() {
   return (
     <div className="" style={{ textAlign: "center" }}>
       <button
+        className="col-6"
         onClick={initiatePayment}
         style={{ background: "blue", padding: "5px" }}
       >
         PLAY
+      </button>
+      <button
+        className="
+      col-6"
+        onClick={() => {
+          navigate("/hello");
+        }}
+      >
+        PAUSE
       </button>
     </div>
   );

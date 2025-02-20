@@ -1,9 +1,9 @@
-import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
-import { AppRoot } from '@telegram-apps/telegram-ui';
-import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
+import { useLaunchParams, miniApp, useSignal } from "@telegram-apps/sdk-react";
+import { AppRoot } from "@telegram-apps/telegram-ui";
+import { Navigate, Route, Routes, HashRouter } from "react-router-dom";
 
-import { routes } from '@/navigation/routes.jsx';
-import Demo from '@/pages/Demo';
+import { routes } from "@/navigation/routes.jsx";
+import Demo from "@/pages/Demo";
 
 export function App() {
   const lp = useLaunchParams();
@@ -11,8 +11,8 @@ export function App() {
 
   return (
     <AppRoot
-      appearance={isDark ? 'dark' : 'light'}
-      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
+      appearance={isDark ? "dark" : "light"}
+      platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
     >
       {/* <HashRouter>
         <Routes>
@@ -21,8 +21,15 @@ export function App() {
         </Routes>
       </HashRouter> */}
       <Routes>
-      <Route path="/" element={<Demo />}/>  
-      
+        <Route path="/" element={<Demo />} />
+        <Route
+          path="/hello"
+          element={
+            <>
+              <div>HLELO</div>
+            </>
+          }
+        />
       </Routes>
     </AppRoot>
   );
