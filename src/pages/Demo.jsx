@@ -34,7 +34,7 @@ export default function Demo() {
     <div className="" style={{ textAlign: "center" }}>
       <button
         className="col-6"
-        onClick={initiatePayment}
+        // onClick={initiatePayment}
         style={{ background: "blue", padding: "5px" }}
       >
         PLAY
