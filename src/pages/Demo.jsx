@@ -7,15 +7,23 @@ import { useNavigate } from "react-router-dom";
 export default function Demo({ links, Liks, setLiks }) {
   const navigate = useNavigate();
   const initiatePayment = async () => {
+    // {
+    //   social_id: "78944561252",
+    //   username: "test_k",
+    //   first_name: "demo_k",
+    //   last_name: "test_k",
+    //   avatar: "",
+    // }
     try {
       const tok = await axios.post(
         "http://192.168.29.170:4000/api/user/signUp",
         {
-          social_id: "78944561252",
-          username: "test_k",
-          first_name: "demo_k",
-          last_name: "test_k",
-          avatar: "",
+          social_id:
+            WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
+          username: WebApp.initDataUnsafe.user?.username || "test_k",
+          first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+          last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
+          avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
         }
       );
       const token = tok?.data?.body?.token;
