@@ -81,7 +81,9 @@ export default function Demo({ links, Liks, setLiks }) {
                 alt="Connect Wallet"
               />
             </span>
-            <span className="">Connect Wallet</span>
+            <span className="" style={{ flex: "1" }}>
+              Connect Wallet
+            </span>
           </div>
         </div>
       </div>
