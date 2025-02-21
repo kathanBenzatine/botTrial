@@ -76,15 +76,29 @@ export default function Demo({ links, Liks, setLiks }) {
         </>
       ) : (
         <>
-          <Puff
-            visible={true}
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="puff-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
+          <div
+            style={{
+              position: "fixed",
+              zIndex: "30",
+              background: "black",
+              opacity: "0.5",
+              inset: "0px",
+            }}
+          ></div>
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "100vh" }}
+          >
+            <Puff
+              visible={true}
+              height="60"
+              width="60"
+              color="#cda000"
+              ariaLabel="puff-loading"
+              wrapperStyle={{ zIndex: "999999999999" }}
+              wrapperClass="loader"
+            />
+          </div>
         </>
       )}
     </div>
