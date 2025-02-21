@@ -5,24 +5,24 @@ import { useNavigate } from "react-router-dom";
 export default function Demo() {
   const navigate = useNavigate();
   const initiatePayment = () => {
-    // try {
-    //   WebApp.openInvoice(
-    //     "https://t.me/$L-6lxqntuFUIAwAAw_E5X8dDOUE",
-    //     function (invoiceStatus) {
-    //       if (invoiceStatus.status === "paid") {
-    //         console.log("Payment successful!");
-    //       } else {
-    //         console.log("Payment failed or was cancelled.");
-    //       }
-    //     }
-    //   );
-    // } catch (error) {
-    //   console.error("Error opening invoice:", error);
-    // }
+    try {
+      WebApp.openInvoice(
+        "https://t.me/$L-6lxqntuFUIAwAAw_E5X8dDOUE",
+        function (invoiceStatus) {
+          if (invoiceStatus.status === "paid") {
+            console.log("Payment successful!");
+          } else {
+            console.log("Payment failed or was cancelled.");
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Error opening invoice:", error);
+    }
     // const handleClick = () => {
     //   Construct the deep link URL to send the /pay command to the bot
-    const botLink = `https://t.me/trialTriallairt_bot?start=pay`;
-    window.location.href = botLink;
+    // const botLink = `https://t.me/trialTriallairt_bot?start=pay`;
+    // window.location.href = botLink;
     // };
   };
   // const invoice = initInvoice();
@@ -34,7 +34,7 @@ export default function Demo() {
     <div className="" style={{ textAlign: "center" }}>
       <button
         className="col-6"
-        // onClick={initiatePayment}
+        onClick={initiatePayment}
         style={{ background: "blue", padding: "5px" }}
       >
         PLAY
