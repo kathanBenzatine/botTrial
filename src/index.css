@@ -92,27 +92,22 @@ body {
 .active-my-page-tab {
   cursor: pointer;
   text-align: center;
-  display: flex; /* Ensure flexbox is used */
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-  width: 122px; /* Set fixed width */
+  align-content: center;
+  border-radius: 10px;
+  width: 130px;
   height: 34px;
   background-color: var(--primary-color);
   color: #000;
   font-size: 12px;
   font-weight: 500;
   border: 1px solid black;
-  padding: 0 10px; /* Ensure equal padding */
-  box-sizing: border-box; /* Prevent extra width issues */
+  border-radius: 50px;
 }
-
 .active-my-page-tab div {
-  display: flex; /* Ensure inner content is aligned */
-  align-items: center;
-  justify-content: center;
-  gap: 5px; /* Adjust gap for proper spacing */
-  width: 100%; /* Ensure it uses full width */
+  padding: 0px 7px;
+}
+.active-my-page-tab .connect-wallet {
+  flex: 1 1 0%;
 }
 
 /* padding-right: 3px; */

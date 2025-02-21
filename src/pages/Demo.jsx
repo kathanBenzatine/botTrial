@@ -75,15 +75,16 @@ export default function Demo({ links, Liks, setLiks }) {
           className={"active-my-page-tab"}
         >
           <div className=" d-flex justify-content-between align-items-center">
-            <span>
+            <p className=" mb-0">
               <img
-                src="http://localhost:5174/src/assets/images/SmallBlueWallet.png"
+                style={{ height: "21px", width: "22px", borderRadius: "50px" }}
+                src="https://picsum.photos/200/300"
                 alt="Connect Wallet"
               />
-            </span>
-            <span className="" style={{ flex: "1" }}>
+            </p>
+            <p className=" mb-0" style={{ flex: "4" }}>
               Connect Wallet
-            </span>
+            </p>
           </div>
         </div>
       </div>
