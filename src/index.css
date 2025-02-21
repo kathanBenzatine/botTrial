@@ -6,3 +6,52 @@ body {
 .loader {
   z-index: 999999999999;
 }
+/* Telegram-style UI */
+.telegram-ui {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Card container */
+.coin-card {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  height: 150px; /* Fixed height for uniformity */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.coin-card:hover {
+  border-color: #007bff;
+  transform: translateY(-5px);
+}
+
+/* Selected card */
+.coin-card.selected {
+  border-color: #007bff;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+/* Coin amount */
+.coin-amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Price text */
+.coin-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #28a745;
+}
