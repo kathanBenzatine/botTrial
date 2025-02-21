@@ -16,11 +16,11 @@ export default function Demo() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    { id: 1, coins: 100, price: "⭐ 10" },
-    { id: 2, coins: 600, price: "⭐ 50" },
-    { id: 3, coins: 1500, price: "⭐ 100" },
-    { id: 4, coins: 8000, price: "⭐ 500" },
-    { id: 5, coins: 20000, price: "⭐ 1000" },
+    { id: 1, coins: 100, price: "⭐ 1" },
+    { id: 2, coins: 600, price: "⭐ 2" },
+    { id: 3, coins: 1500, price: "⭐ 3" },
+    { id: 4, coins: 8000, price: "⭐ 4" },
+    { id: 5, coins: 20000, price: "⭐ 5" },
   ];
 
   const initiatePayment = async () => {
