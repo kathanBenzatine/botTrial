@@ -26,21 +26,17 @@ export default function Demo() {
   const initiatePayment = async () => {
     // use selected Option
     try {
-      const tok = await axios.post(
-        "http://192.168.29.170:4000/api/user/signUp",
-        {
-          social_id:
-            WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
-          username: WebApp.initDataUnsafe.user?.username || "test_k",
-          first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-          last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
-          avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-        }
-      );
+      const tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+        social_id: WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
+        username: WebApp.initDataUnsafe.user?.username || "test_k",
+        first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+        last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
+        avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+      });
       const token = tok?.data?.body?.token;
 
       const response = await axios.get(
-        "http://192.168.29.170:4000/api/payment/create",
+        "https://api.tontoon.app/api/payment/create",
         {
           headers: {
             Authorization: `Bearer ${token}`,
