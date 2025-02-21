@@ -54,7 +54,7 @@ export default function Demo({ links, Liks, setLiks }) {
 
   return (
     <div className="" style={{ textAlign: "center" }}>
-      {Loading ? (
+      {!Loading ? (
         <>
           <button
             className="col-6"
