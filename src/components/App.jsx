@@ -10,8 +10,14 @@ import {
 
 import { routes } from "@/navigation/routes.jsx";
 import Demo from "@/pages/Demo";
+import { useState } from "react";
 
 export function App() {
+  const [Liks, setLiks] = useState(0);
+  const links = [
+    "https://t.me/$i2b0N6ntwFUkAgAAFaQvAq7q0fA",
+    "https://t.me/$L-6lxqntuFUIAwAAw_E5X8dDOUE",
+  ];
   const lp = useLaunchParams();
   const isDark = useSignal(miniApp.isDark);
   const navigate = useNavigate();
@@ -27,7 +33,10 @@ export function App() {
         </Routes>
       </HashRouter> */}
       <Routes>
-        <Route path="/" element={<Demo />} />
+        <Route
+          path="/"
+          element={<Demo links={links} setLiks={setLiks} Liks={Liks} />}
+        />
         <Route
           path="/hello"
           element={
