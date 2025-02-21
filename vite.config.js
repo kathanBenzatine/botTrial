@@ -1,8 +1,8 @@
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import react from '@vitejs/plugin-react-swc';
-import { defineConfig } from 'vite';
-import mkcert from 'vite-plugin-mkcert';
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
+import mkcert from "vite-plugin-mkcert";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,15 +15,14 @@ export default defineConfig({
     // https://www.npmjs.com/package/vite-plugin-mkcert
     mkcert(),
   ],
-  publicDir: './public',
+  publicDir: "./public",
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
   },
   resolve: {
     alias: {
-      '@': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
-    }
+      "@": resolve(dirname(fileURLToPath(import.meta.url)), "./src"),
+    },
   },
 });
-

@@ -11,8 +11,52 @@ import {
 import { routes } from "@/navigation/routes.jsx";
 import Demo from "@/pages/Demo";
 import { useState } from "react";
-
+import axios from "axios";
 export function App() {
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_APP_BACKEND_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  axiosInstance.interceptors.request.use(
+    async (config) => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      } catch (error) {
+        console.error("Error setting Authorization header :", error);
+        return Promise.reject(error);
+      }
+    },
+    (error) => {
+      console.error("Request interceptor error :", error);
+      return Promise.reject(error);
+    }
+  );
+
+  axiosInstance.interceptors.response.use(
+    async (response) => {
+      try {
+        return response;
+      } catch (error) {
+        console.error("Error setting Authorization:", error);
+        return Promise.reject(error);
+      }
+    },
+    (error) => {
+      console.log("error", error.response?.status);
+      if (error.response?.status === 401) {
+        // logout
+      }
+      console.error("Request interceptor error:", error);
+      return Promise.reject(error);
+    }
+  );
+
   const [Liks, setLiks] = useState(0);
   const links = [
     "https://t.me/$i2b0N6ntwFUkAgAAFaQvAq7q0fA",
