@@ -11,20 +11,23 @@ export default function Demo({ links, Liks, setLiks }) {
       const tok = await axios.post(
         "http://192.168.29.170:4000/api/user/signUp",
         {
-          social_id: 78944561252,
+          social_id: "78944561252",
           username: "test_k",
           first_name: "demo_k",
           last_name: "test_k",
           avatar: "",
         }
       );
-      debugger;
-      return;
-      const response = await axios.get("/api/payment/create", {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTJlM2QwYzYxMzBjZjQ3MWZjNGE0OSIsImlhdCI6MTc0MDExMTA0NSwiZXhwIjoxNzQwNzE1ODQ1fQ.j0RoWWh0GDGmA0yKC8Wz7dXlg9CEg5Pn3jA3-kEuUMw`,
-        },
-      });
+      const token = tok?.data?.body?.token;
+
+      const response = await axios.get(
+        "http://192.168.29.170:4000/api/payment/create",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // const { invoiceLink } = await response.json();
 
@@ -65,29 +68,6 @@ export default function Demo({ links, Liks, setLiks }) {
       >
         PAUSE
       </button>
-      <div className="TON-tabbs d-flex gap-4 justify-content-center">
-        <div
-          // onClick={() => {
-          //   setShowTON({ type: "TON", show: true });
-          //   setSelectedTab("TON");
-          //   setIsSettingPage(false);
-          // }}
-          className={"active-my-page-tab"}
-        >
-          <div className=" d-flex justify-content-between align-items-center">
-            <p className=" mb-0">
-              <img
-                style={{ height: "21px", width: "22px", borderRadius: "50px" }}
-                src="https://picsum.photos/200/300"
-                alt="Connect Wallet"
-              />
-            </p>
-            <p className=" mb-0" style={{ flex: "4" }}>
-              Connect Wallet
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

@@ -13,12 +13,13 @@ export default defineConfig({
     react(),
     // Create a custom SSL certificate valid for the local machine.
     // https://www.npmjs.com/package/vite-plugin-mkcert
-    mkcert(),
+    // mkcert(),
   ],
   publicDir: "./public",
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
+    https: false,
   },
   resolve: {
     alias: {
