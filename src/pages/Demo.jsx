@@ -1,10 +1,11 @@
 import WebApp from "@twa-dev/sdk";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Puff } from "react-loader-spinner";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo({ links, Liks, setLiks }) {
+  const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const initiatePayment = async () => {
     // {
@@ -15,6 +16,7 @@ export default function Demo({ links, Liks, setLiks }) {
     //   avatar: "",
     // }
     try {
+      setLoading(true);
       const tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
         social_id: WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
         username: WebApp.initDataUnsafe.user?.username || "test_k",
@@ -32,47 +34,59 @@ export default function Demo({ links, Liks, setLiks }) {
           },
         }
       );
-
-      // const { invoiceLink } = await response.json();
-
-      // console.log("Opening invoice:", invoiceLink);
-
+      if (response) {
+        setLoading(false);
+      }
       WebApp.openInvoice(response?.data?.url, function (invoiceStatus) {
         console.log(invoiceStatus, "invoiceStatus");
         if (invoiceStatus) {
+          setLoading(false);
           console.log(invoiceStatus, "success invoiceStatus");
         } else {
           console.log("Payment failed or was cancelled.");
         }
       });
     } catch (error) {
+      setLoading(false);
       console.error("Error opening invoice:", error);
     }
   };
-  // const invoice = initInvoice();
-  // invoice.open("https://t.me/invoice/abIIks213", "url").then((status) => {
-  //   // Output: 'paid'
-  //   return console.log(status);
-  // });
+
   return (
     <div className="" style={{ textAlign: "center" }}>
-      <button
-        className="col-6"
-        onClick={initiatePayment}
-        style={{ background: "blue", padding: "5px" }}
-      >
-        PLAY
-      </button>
-      <button
-        style={{ background: "red" }}
-        className="
+      {Loading ? (
+        <>
+          <button
+            className="col-6"
+            onClick={initiatePayment}
+            style={{ background: "blue", padding: "5px" }}
+          >
+            PLAY
+          </button>
+          <button
+            style={{ background: "red" }}
+            className="
       col-6"
-        onClick={() => {
-          navigate("/hello");
-        }}
-      >
-        PAUSE
-      </button>
+            onClick={() => {
+              navigate("/hello");
+            }}
+          >
+            PAUSE
+          </button>
+        </>
+      ) : (
+        <>
+          <Puff
+            visible={true}
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="puff-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </>
+      )}
     </div>
   );
 }
