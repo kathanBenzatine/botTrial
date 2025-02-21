@@ -38,8 +38,8 @@ export default function Demo({ links, Liks, setLiks }) {
       // console.log("Opening invoice:", invoiceLink);
 
       WebApp.openInvoice(response?.data?.url, function (invoiceStatus) {
-        if (invoiceStatus.status === "paid") {
-          console.log("Payment successful!");
+        if (invoiceStatus) {
+          console.log(invoiceStatus, "success");
         } else {
           console.log("Payment failed or was cancelled.");
         }
