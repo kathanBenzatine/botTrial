@@ -75,7 +75,7 @@ export default function Demo() {
       // const token = tok?.data?.body?.token;
 
       const response = await axios.get(
-        `https://api.tontoon.app/api/create/${id}`,
+        `https://api.tontoon.app/api/payment/create/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken}`,
