@@ -62,32 +62,28 @@ export default function Demo() {
     }
   };
 
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      console.log("Google Login Success", tokenResponse);
+  const handleGoogleSuccess = async (credentialResponse) => {
+    console.log("Google Login Success:", credentialResponse);
 
-      try {
-        // Send the token to your backend for verification
-        const res = await axios.post(
-          "https://api.tontoon.app/api/user/google-login",
-          {
-            token: tokenResponse.credential, // Google ID Token
-            social_id:
-              WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
-            username: WebApp.initDataUnsafe.user?.username || "test_k",
-            first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-          }
-        );
+    try {
+      // Send the token to your backend for verification
+      const res = await axios.post(
+        "https://api.tontoon.app/api/user/google-login",
+        {
+          token: credentialResponse.credential, // Google ID Token
+          social_id:
+            WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+          username: WebApp.initDataUnsafe.user?.username || "test_k",
+          first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+          avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+        }
+      );
 
-        console.log("Backend Response:", res.data);
-      } catch (error) {
-        console.error("Google Auth Error:", error);
-      }
-    },
-    onError: () => console.log("Google Login Failed"),
-    ux_mode: "popup", // Ensure pop-up login to stay in Telegram WebView
-  });
+      console.log("Backend Response:", res.data);
+    } catch (error) {
+      console.error("Google Auth Error:", error);
+    }
+  };
 
   return (
     <div className="" style={{ textAlign: "center" }}>
@@ -119,13 +115,19 @@ export default function Demo() {
               console.log("Login Failed");
             }}
           /> */}
-          <button
+          <div className="google-login">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => console.log("Google Login Failed")}
+            />
+          </div>
+          {/* <button
             className=""
             style={{ background: "black", color: "white" }}
             onClick={() => loginWithGoogle()}
           >
             GOOGLE LOGIN
-          </button>
+          </button> */}
         </>
       ) : (
         <>
