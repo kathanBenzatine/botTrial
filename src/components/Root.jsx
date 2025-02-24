@@ -1,9 +1,10 @@
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
-import { App } from '@/components/App.jsx';
-import { ErrorBoundary } from '@/components/ErrorBoundary.jsx';
-import { publicUrl } from '@/helpers/publicUrl.js';
-import { BrowserRouter } from 'react-router-dom'
+import { App } from "@/components/App.jsx";
+import { ErrorBoundary } from "@/components/ErrorBoundary.jsx";
+import { publicUrl } from "@/helpers/publicUrl.js";
+import { BrowserRouter } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 function ErrorBoundaryError({ error }) {
   return (
     <div>
@@ -12,9 +13,9 @@ function ErrorBoundaryError({ error }) {
         <code>
           {error instanceof Error
             ? error.message
-            : typeof error === 'string'
-              ? error
-              : JSON.stringify(error)}
+            : typeof error === "string"
+            ? error
+            : JSON.stringify(error)}
         </code>
       </blockquote>
     </div>
@@ -23,15 +24,12 @@ function ErrorBoundaryError({ error }) {
 
 export function Root() {
   return (
-    <ErrorBoundary fallback={ErrorBoundaryError}>
-      <TonConnectUIProvider
-        manifestUrl={publicUrl('tonconnect-manifest.json')}
-      >
+    <GoogleOAuthProvider clientId="836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com">
+      <TonConnectUIProvider manifestUrl={publicUrl("tonconnect-manifest.json")}>
         <BrowserRouter>
-
-        <App/>
+          <App />
         </BrowserRouter>
       </TonConnectUIProvider>
-    </ErrorBoundary>
+    </GoogleOAuthProvider>
   );
 }

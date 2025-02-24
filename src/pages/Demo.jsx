@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../components/Loader/Loader";
+import { GoogleLogin } from "@react-oauth/google";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
@@ -22,6 +23,19 @@ export default function Demo() {
     { id: 4, coins: 8000, price: "⭐ 4" },
     { id: 5, coins: 20000, price: "⭐ 5" },
   ];
+
+  // const googleLogin = useGoogleLogin({
+  //   flow: "auth-code",
+  //   onSuccess: async (codeResponse) => {
+  //     console.log(codeResponse);
+  //     const tokens = await axios.post("http://localhost:3001/auth/google", {
+  //       code: codeResponse.code,
+  //     });
+
+  //     console.log(tokens);
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // });
 
   const initiatePayment = async () => {
     // use selected Option
@@ -83,6 +97,15 @@ export default function Demo() {
           >
             PAUSE
           </button>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              console.log(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          ;
         </>
       ) : (
         <>
