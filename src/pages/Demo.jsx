@@ -16,15 +16,52 @@ export default function Demo() {
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const options = [
-    { id: 1, coins: 100, price: "⭐ 1" },
-    { id: 2, coins: 600, price: "⭐ 2" },
-    { id: 3, coins: 1500, price: "⭐ 3" },
-    { id: 4, coins: 8000, price: "⭐ 4" },
-    { id: 5, coins: 20000, price: "⭐ 5" },
-  ];
+  // const options = [
+  //   { id: 1, coins: 100, price: "⭐ 1" },
+  //   { id: 2, coins: 600, price: "⭐ 2" },
+  //   { id: 3, coins: 1500, price: "⭐ 3" },
+  //   { id: 4, coins: 8000, price: "⭐ 4" },
+  //   { id: 5, coins: 20000, price: "⭐ 5" },
+  // ];
+  const [options, setoptions] = useState();
 
-  const initiatePayment = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tok = await axios.post(
+          "https://api.tontoon.app/api/user/signUp",
+          {
+            social_id:
+              WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
+            username: WebApp.initDataUnsafe.user?.username || "test_k",
+            first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+            last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
+            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+          }
+        );
+        const token = tok?.data?.body?.token;
+        const response = await axios.get("https://api.tontoon.app/api/coin", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setoptions(
+          response?.data?.body?.map((item, index) => ({
+            id: item?._id,
+            coins: item.coin,
+            price: `⭐ ${item.star}`,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const initiatePayment = async (id) => {
     // use selected Option
     try {
       const tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
@@ -37,7 +74,7 @@ export default function Demo() {
       const token = tok?.data?.body?.token;
 
       const response = await axios.get(
-        "https://api.tontoon.app/api/payment/create",
+        `https://api.tontoon.app/api/create/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -191,7 +228,7 @@ export default function Demo() {
                 onClick={() => {
                   setLoading(true);
                   handleClose();
-                  initiatePayment();
+                  initiatePayment(selectedOption?.id);
                 }}
               >
                 Save Changes
