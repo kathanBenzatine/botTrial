@@ -85,7 +85,7 @@ export default function Demo() {
       if (response) {
         setLoading(false);
       }
-      WebApp.openInvoice(response?.data?.url, function (invoiceStatus) {
+      WebApp.openInvoice(response?.data?.body?.url, function (invoiceStatus) {
         if (invoiceStatus) {
           setLoading(false);
           console.log(invoiceStatus, "success invoiceStatus");
