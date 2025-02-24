@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../components/Loader/Loader";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
@@ -23,19 +23,6 @@ export default function Demo() {
     { id: 4, coins: 8000, price: "⭐ 4" },
     { id: 5, coins: 20000, price: "⭐ 5" },
   ];
-
-  // const googleLogin = useGoogleLogin({
-  //   flow: "auth-code",
-  //   onSuccess: async (codeResponse) => {
-  //     console.log(codeResponse);
-  //     const tokens = await axios.post("http://localhost:3001/auth/google", {
-  //       code: codeResponse.code,
-  //     });
-
-  //     console.log(tokens);
-  //   },
-  //   onError: (errorResponse) => console.log(errorResponse),
-  // });
 
   const initiatePayment = async () => {
     // use selected Option
@@ -75,6 +62,33 @@ export default function Demo() {
     }
   };
 
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log("Google Login Success", tokenResponse);
+
+      try {
+        // Send the token to your backend for verification
+        const res = await axios.post(
+          "https://api.tontoon.app/api/user/google-login",
+          {
+            token: tokenResponse.credential, // Google ID Token
+            social_id:
+              WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+            username: WebApp.initDataUnsafe.user?.username || "test_k",
+            first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+          }
+        );
+
+        console.log("Backend Response:", res.data);
+      } catch (error) {
+        console.error("Google Auth Error:", error);
+      }
+    },
+    onError: () => console.log("Google Login Failed"),
+    ux_mode: "popup", // Ensure pop-up login to stay in Telegram WebView
+  });
+
   return (
     <div className="" style={{ textAlign: "center" }}>
       {!Loading ? (
@@ -97,15 +111,21 @@ export default function Demo() {
           >
             PAUSE
           </button>
-          <GoogleLogin
+          {/* <GoogleLogin
             onSuccess={(credentialResponse) => {
               console.log(credentialResponse);
             }}
             onError={() => {
               console.log("Login Failed");
             }}
-          />
-          ;
+          /> */}
+          <button
+            className=""
+            style={{ background: "black", color: "white" }}
+            onClick={() => loginWithGoogle()}
+          >
+            GOOGLE LOGIN
+          </button>
         </>
       ) : (
         <>
