@@ -14,8 +14,8 @@ export default function Demo() {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
 
+  const [getToken, setgetToken] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-
   // const options = [
   //   { id: 1, coins: 100, price: "⭐ 1" },
   //   { id: 2, coins: 600, price: "⭐ 2" },
@@ -40,6 +40,7 @@ export default function Demo() {
           }
         );
         const token = tok?.data?.body?.token;
+        setgetToken(token);
         const response = await axios.get("https://api.tontoon.app/api/coin", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,20 +65,20 @@ export default function Demo() {
   const initiatePayment = async (id) => {
     // use selected Option
     try {
-      const tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
-        social_id: WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
-        username: WebApp.initDataUnsafe.user?.username || "test_k",
-        first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-        last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
-        avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-      });
-      const token = tok?.data?.body?.token;
+      // const tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+      //   social_id: WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
+      //   username: WebApp.initDataUnsafe.user?.username || "test_k",
+      //   first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+      //   last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
+      //   avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+      // });
+      // const token = tok?.data?.body?.token;
 
       const response = await axios.get(
         `https://api.tontoon.app/api/create/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getToken}`,
           },
         }
       );
