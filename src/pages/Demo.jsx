@@ -43,15 +43,15 @@ export default function Demo() {
           },
         }
       );
-      if (response) {
-        setLoading(false);
-      }
+      // if (response) {
+      //   setLoading(false);
+      // }
       WebApp.openInvoice(response?.data?.url, function (invoiceStatus) {
-        console.log(invoiceStatus, "invoiceStatus");
         if (invoiceStatus) {
           setLoading(false);
           console.log(invoiceStatus, "success invoiceStatus");
         } else {
+          setLoading(false);
           console.log("Payment failed or was cancelled.");
         }
       });
