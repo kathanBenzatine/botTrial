@@ -2,8 +2,8 @@ import WebApp from "@twa-dev/sdk";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Puff } from "react-loader-spinner";
 import Modal from "react-bootstrap/Modal";
+import Loader from "../components/Loader/Loader";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
@@ -99,15 +99,7 @@ export default function Demo() {
             className="d-flex justify-content-center align-items-center"
             style={{ height: "100vh" }}
           >
-            <Puff
-              visible={true}
-              height="60"
-              width="60"
-              color="#cda000"
-              ariaLabel="puff-loading"
-              wrapperStyle={{ zIndex: "999999999999" }}
-              wrapperClass="loader"
-            />
+            <Loader />
           </div>
         </>
       )}
