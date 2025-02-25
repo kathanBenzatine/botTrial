@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../components/Loader/Loader";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import {
+  GoogleLogin,
+  useGoogleLogin,
+  useGoogleOneTapLogin,
+} from "@react-oauth/google";
 // import { useTelegram } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
@@ -116,26 +120,69 @@ export default function Demo() {
       console.error("Google Auth Error:", error);
     }
   };
-  const login = useGoogleLogin({
+  // const login = useGoogleLogin({
+  //   clientId:
+  //     "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
+  //   flow: "implicit", // Use implicit flow to avoid full-page redirects
+  //   onSuccess: async (credentialResponse) => {
+  //     console.log("Google Login Success:", credentialResponse);
+
+  //     try {
+  //       // Send token to backend
+  //       const res = await axios.post(
+  //         "https://api.tontoon.app/api/user/google-login",
+  //         {
+  //           token: credentialResponse.access_token,
+  //           social_id:
+  //             WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+  //           username: WebApp?.initDataUnsafe?.user?.username || "test_k",
+  //           first_name: WebApp?.initDataUnsafe?.user?.first_name || "demo_k",
+  //           avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+  //         }
+  //       );
+
+  //       console.log("Backend Response:", res.data);
+  //     } catch (error) {
+  //       console.error("Google Auth Error:", error);
+  //     }
+  //   },
+  //   onError: () => {
+  //     console.log("Google Login Failed");
+  //   },
+  // });
+
+  // const openGoogleAuth = () => {
+  //   const REDIRECT_URI = "https://your-backend.com/google-auth";
+
+  //   const GOOGLE_CLIENT_ID =
+  //     "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com";
+  //   const authUrl = `https://accounts.google.com/o/oauth2/auth?
+  //     client_id=${GOOGLE_CLIENT_ID}
+  //     &redirect_uri=${REDIRECT_URI}
+  //     &response_type=token
+  //     &scope=email%20profile
+  //     &state=${WebApp.initData}`.replace(/\s+/g, ""); // Remove whitespace
+
+  //   if (WebApp) {
+  //     WebApp.openLink(authUrl); // Open Google login inside Telegram WebView
+  //   } else {
+  //     window.open(authUrl, "_blank"); // Fallback for browsers
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   WebApp?.expand(); // Ensure full-screen view in Telegram Mini App
+  // }, []);
+
+  useGoogleOneTapLogin({
     clientId:
       "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
-    flow: "implicit", // Use implicit flow to avoid full-page redirects
-    onSuccess: async (credentialResponse) => {
-      console.log("Google Login Success:", credentialResponse);
-
+    onSuccess: async (response) => {
+      console.log("Google Login Success:", response);
       try {
-        // Send token to backend
-        const res = await axios.post(
-          "https://api.tontoon.app/api/user/google-login",
-          {
-            token: credentialResponse.access_token,
-            social_id:
-              WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
-            username: WebApp?.initDataUnsafe?.user?.username || "test_k",
-            first_name: WebApp?.initDataUnsafe?.user?.first_name || "demo_k",
-            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-          }
-        );
+        const res = await axios.post("https://your-backend.com/google-login", {
+          token: response.credential, // Google ID Token
+        });
 
         console.log("Backend Response:", res.data);
       } catch (error) {
@@ -185,19 +232,6 @@ export default function Demo() {
                 console.log("Google Login Failed");
               }}
             /> */}
-            <button
-              onClick={() => login()}
-              style={{
-                padding: "10px 20px",
-                background: "#4285F4",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Login with Google
-            </button>
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
