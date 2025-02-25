@@ -10,6 +10,7 @@ export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [googleSuccess, setgoogleSuccess] = useState(false);
+  const [googleFail, setgoogleFail] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
@@ -148,12 +149,20 @@ export default function Demo() {
           <div className="google-login">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
-              onError={() => console.log("Google Login Failed")}
+              onError={() => {
+                setgoogleFail(true);
+                console.log("Google Login Failed");
+              }}
             />
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
               GOOGLE LOGIN SUCCESSFULLY DONE
+            </h1>
+          )}
+          {googleFail && (
+            <h1 className="" style={{ color: "black" }}>
+              GOOGLE LOGIN FAILED
             </h1>
           )}
           {/* <button
