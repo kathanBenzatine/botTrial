@@ -96,16 +96,76 @@ export default function Demo() {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    setgoogleSuccess(true);
-    console.log("Google Login Success:", credentialResponse);
+  // const handleGoogleSuccess = async (credentialResponse) => {
+  //   setgoogleSuccess(true);
+  //   console.log("Google Login Success:", credentialResponse);
+
+  //   try {
+  //     // Send the token to your backend for verification
+  //     const res = await axios.post(
+  //       "https://api.tontoon.app/api/user/google-login",
+  //       {
+  //         token: credentialResponse.credential, // Google ID Token
+  //         social_id:
+  //           WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+  //         username: WebApp.initDataUnsafe.user?.username || "test_k",
+  //         first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+  //         avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+  //       }
+  //     );
+
+  //     console.log("Backend Response:", res.data);
+  //   } catch (error) {
+  //     setgoogleFail(true);
+  //     console.error("Google Auth Error:", error);
+  //   }
+  // };
+  // const googleLogin = useGoogleLogin({
+  //   clientId:
+  //     "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
+  //   onSuccess: async (response) => {
+  //     console.log("Google Login Success:", response);
+  //     try {
+  //       const res = await axios.post("https://your-backend.com/google-login", {
+  //         token: response.credential, // Google ID Token
+  //         telegramUser: WebApp?.initDataUnsafe?.user || {}, // Send Telegram user data
+  //       });
+
+  //       console.log("Backend Response:", res.data);
+  //       WebApp?.close(); // Close Telegram WebView after login
+  //     } catch (error) {
+  //       console.error("Google Auth Error:", error);
+  //     }
+  //   },
+  //   onError: () => {
+  //     console.log("Google Login Failed");
+  //   },
+  // });
+
+  useEffect(() => {
+    // Load Google Identity Services script
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.onload = () => {
+      window.google.accounts.id.initialize({
+        client_id:
+          "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
+        callback: handleGoogleSuccess,
+        auto_select: false, // Disable auto-login
+      });
+    };
+    document.body.appendChild(script);
+  }, []);
+
+  const handleGoogleSuccess = async (response) => {
+    console.log("Google Login Success:", response);
 
     try {
-      // Send the token to your backend for verification
       const res = await axios.post(
         "https://api.tontoon.app/api/user/google-login",
         {
-          token: credentialResponse.credential, // Google ID Token
+          token: response.credential,
           social_id:
             WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
           username: WebApp.initDataUnsafe.user?.username || "test_k",
@@ -116,31 +176,15 @@ export default function Demo() {
 
       console.log("Backend Response:", res.data);
     } catch (error) {
-      setgoogleFail(true);
       console.error("Google Auth Error:", error);
     }
   };
-  const googleLogin = useGoogleLogin({
-    clientId:
-      "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
-    onSuccess: async (response) => {
-      console.log("Google Login Success:", response);
-      try {
-        const res = await axios.post("https://your-backend.com/google-login", {
-          token: response.credential, // Google ID Token
-          telegramUser: WebApp?.initDataUnsafe?.user || {}, // Send Telegram user data
-        });
 
-        console.log("Backend Response:", res.data);
-        WebApp?.close(); // Close Telegram WebView after login
-      } catch (error) {
-        console.error("Google Auth Error:", error);
-      }
-    },
-    onError: () => {
-      console.log("Google Login Failed");
-    },
-  });
+  const handleGoogleLogin = () => {
+    if (window.google) {
+      window.google.accounts.id.prompt(); // Triggers Google One-Tap popup
+    }
+  };
 
   useEffect(() => {
     if (WebApp) {
@@ -186,13 +230,14 @@ export default function Demo() {
                 console.log("Google Login Failed");
               }}
             /> */}
-            <button
+            <button onClick={handleGoogleLogin}>Sign in with Google</button>
+            {/* <button
               className=""
               style={{ background: "black", color: "white" }}
               onClick={() => googleLogin()}
             >
               GOOGLE LOGIN
-            </button>
+            </button> */}
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
