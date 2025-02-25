@@ -112,6 +112,7 @@ export default function Demo() {
 
       console.log("Backend Response:", res.data);
     } catch (error) {
+      setgoogleFail(true);
       console.error("Google Auth Error:", error);
     }
   };
