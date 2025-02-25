@@ -100,25 +100,25 @@ export default function Demo() {
     setgoogleSuccess(true);
     console.log("Google Login Success:", credentialResponse);
 
-    try {
-      // Send the token to your backend for verification
-      const res = await axios.post(
-        "https://api.tontoon.app/api/user/google-login",
-        {
-          token: credentialResponse.credential, // Google ID Token
-          social_id:
-            WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
-          username: WebApp.initDataUnsafe.user?.username || "test_k",
-          first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-          avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-        }
-      );
+    // try {
+    //   // Send the token to your backend for verification
+    //   const res = await axios.post(
+    //     "https://api.tontoon.app/api/user/google-login",
+    //     {
+    //       token: credentialResponse.credential, // Google ID Token
+    //       social_id:
+    //         WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+    //       username: WebApp.initDataUnsafe.user?.username || "test_k",
+    //       first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+    //       avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+    //     }
+    //   );
 
-      console.log("Backend Response:", res.data);
-    } catch (error) {
-      setgoogleFail(true);
-      console.error("Google Auth Error:", error);
-    }
+    //   console.log("Backend Response:", res.data);
+    // } catch (error) {
+    //   setgoogleFail(true);
+    //   console.error("Google Auth Error:", error);
+    // }
   };
   // const googleLogin = useGoogleLogin({
   //   clientId:
