@@ -121,56 +121,6 @@ export default function Demo() {
   //   },
   // });
 
-  // useEffect(() => {
-  //   // Load Google Identity Services script
-  //   const script = document.createElement("script");
-  //   script.src = "https://accounts.google.com/gsi/client";
-  //   script.async = true;
-  //   script.onload = () => {
-  //     window.google.accounts.id.initialize({
-  //       client_id:
-  //         "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
-  //       callback: handleGoogleSuccess2,
-  //       auto_select: false, // Disable auto-login
-  //     });
-  //   };
-  //   document.body.appendChild(script);
-  // }, []);
-
-  // const handleGoogleSuccess2 = async (response) => {
-  //   console.log("Google Login Success:", response);
-
-  //   try {
-  //     const res = await axios.post(
-  //       "https://api.tontoon.app/api/user/google-login",
-  //       {
-  //         token: response.credential,
-  //         social_id:
-  //           WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
-  //         username: WebApp.initDataUnsafe.user?.username || "test_k",
-  //         first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-  //         avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-  //       }
-  //     );
-
-  //     console.log("Backend Response:", res.data);
-  //   } catch (error) {
-  //     console.error("Google Auth Error:", error);
-  //   }
-  // };
-
-  // const handleGoogleLogin = () => {
-  //   if (window.google) {
-  //     window.google.accounts.id.prompt(); // Triggers Google One-Tap popup
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (WebApp) {
-  //     WebApp.ready();
-  //   }
-  // }, [WebApp]);
-
   return (
     <div className="" style={{ textAlign: "center" }}>
       {!Loading ? (
@@ -209,9 +159,7 @@ export default function Demo() {
                 console.log("Google Login Failed");
               }}
             />
-            {/* <button onClick={handleGoogleLogin}>
-              Sign in with Google CUSTOM
-            </button> */}
+
             {/* <button
               className=""
               style={{ background: "black", color: "white" }}
