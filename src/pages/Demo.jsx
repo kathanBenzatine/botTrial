@@ -209,9 +209,9 @@ export default function Demo() {
                 console.log("Google Login Failed");
               }}
             />
-            <button onClick={handleGoogleLogin}>
+            {/* <button onClick={handleGoogleLogin}>
               Sign in with Google CUSTOM
-            </button>
+            </button> */}
             {/* <button
               className=""
               style={{ background: "black", color: "white" }}
