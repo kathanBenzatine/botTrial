@@ -116,6 +116,36 @@ export default function Demo() {
       console.error("Google Auth Error:", error);
     }
   };
+  const login = useGoogleLogin({
+    clientId:
+      "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
+    flow: "implicit", // Use implicit flow to avoid full-page redirects
+    onSuccess: async (credentialResponse) => {
+      console.log("Google Login Success:", credentialResponse);
+
+      try {
+        // Send token to backend
+        const res = await axios.post(
+          "https://api.tontoon.app/api/user/google-login",
+          {
+            token: credentialResponse.access_token,
+            social_id:
+              WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+            username: WebApp?.initDataUnsafe?.user?.username || "test_k",
+            first_name: WebApp?.initDataUnsafe?.user?.first_name || "demo_k",
+            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+          }
+        );
+
+        console.log("Backend Response:", res.data);
+      } catch (error) {
+        console.error("Google Auth Error:", error);
+      }
+    },
+    onError: () => {
+      console.log("Google Login Failed");
+    },
+  });
 
   return (
     <div className="" style={{ textAlign: "center" }}>
@@ -148,13 +178,26 @@ export default function Demo() {
             }}
           /> */}
           <div className="google-login">
-            <GoogleLogin
+            {/* <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => {
                 setgoogleFail(true);
                 console.log("Google Login Failed");
               }}
-            />
+            /> */}
+            <button
+              onClick={() => login()}
+              style={{
+                padding: "10px 20px",
+                background: "#4285F4",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Login with Google
+            </button>
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
