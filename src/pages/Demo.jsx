@@ -96,30 +96,30 @@ export default function Demo() {
     }
   };
 
-  // const handleGoogleSuccess = async (credentialResponse) => {
-  //   setgoogleSuccess(true);
-  //   console.log("Google Login Success:", credentialResponse);
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setgoogleSuccess(true);
+    console.log("Google Login Success:", credentialResponse);
 
-  //   try {
-  //     // Send the token to your backend for verification
-  //     const res = await axios.post(
-  //       "https://api.tontoon.app/api/user/google-login",
-  //       {
-  //         token: credentialResponse.credential, // Google ID Token
-  //         social_id:
-  //           WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
-  //         username: WebApp.initDataUnsafe.user?.username || "test_k",
-  //         first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-  //         avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-  //       }
-  //     );
+    try {
+      // Send the token to your backend for verification
+      const res = await axios.post(
+        "https://api.tontoon.app/api/user/google-login",
+        {
+          token: credentialResponse.credential, // Google ID Token
+          social_id:
+            WebApp?.initDataUnsafe?.user?.id?.toString() || "78944561252",
+          username: WebApp.initDataUnsafe.user?.username || "test_k",
+          first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+          avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+        }
+      );
 
-  //     console.log("Backend Response:", res.data);
-  //   } catch (error) {
-  //     setgoogleFail(true);
-  //     console.error("Google Auth Error:", error);
-  //   }
-  // };
+      console.log("Backend Response:", res.data);
+    } catch (error) {
+      setgoogleFail(true);
+      console.error("Google Auth Error:", error);
+    }
+  };
   // const googleLogin = useGoogleLogin({
   //   clientId:
   //     "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
@@ -151,14 +151,14 @@ export default function Demo() {
       window.google.accounts.id.initialize({
         client_id:
           "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
-        callback: handleGoogleSuccess,
+        callback: handleGoogleSuccess2,
         auto_select: false, // Disable auto-login
       });
     };
     document.body.appendChild(script);
   }, []);
 
-  const handleGoogleSuccess = async (response) => {
+  const handleGoogleSuccess2 = async (response) => {
     console.log("Google Login Success:", response);
 
     try {
@@ -223,14 +223,16 @@ export default function Demo() {
             }}
           /> */}
           <div className="google-login">
-            {/* <GoogleLogin
+            <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => {
                 setgoogleFail(true);
                 console.log("Google Login Failed");
               }}
-            /> */}
-            <button onClick={handleGoogleLogin}>Sign in with Google</button>
+            />
+            <button onClick={handleGoogleLogin}>
+              Sign in with Google CUSTOM
+            </button>
             {/* <button
               className=""
               style={{ background: "black", color: "white" }}
