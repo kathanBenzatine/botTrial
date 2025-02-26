@@ -30,21 +30,22 @@ export default function Demo() {
         let tok;
         if (!isTMA("simple")) {
           console.log("outside TELEGRAM ENVIRONMENT");
-          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
-            social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
-            username: WebApp.initDataUnsafe.user?.username,
-            first_name: WebApp.initDataUnsafe.user?.first_name,
-            last_name: WebApp.initDataUnsafe.user?.first_name,
-            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-          });
-        } else {
-          console.log("inside TELEGRAM ENVIRONMENT");
+
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: "78944561252",
             username: "test_k",
             first_name: "demo_k",
             last_name: "last_name",
             avatar: "",
+          });
+        } else {
+          console.log("inside TELEGRAM ENVIRONMENT");
+          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+            social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
+            username: WebApp.initDataUnsafe.user?.username,
+            first_name: WebApp.initDataUnsafe.user?.first_name,
+            last_name: WebApp.initDataUnsafe.user?.first_name,
+            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
           });
         }
         const token = tok?.data?.body?.token;
