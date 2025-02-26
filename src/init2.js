@@ -12,35 +12,30 @@ import {
  * Initializes the application and configures its dependencies.
  */
 export function init2(debug) {
-  try {
-    const launchParams = retrieveLaunchParams();
+  // Set @telegram-apps/sdk-react debug mode.
+  $debug.set(debug);
 
-    // If launchParams is undefined, log a warning instead of crashing.
-    if (!launchParams) {
-      console.warn(
-        "⚠️ Warning: Launch parameters are undefined. Running in fallback mode."
-      );
-    }
+  // Initialize special event handlers for Telegram Desktop, Android, iOS, etc.
+  // Also, configure the package.
+  initSDK();
 
-    // Set debug mode.
-    $debug.set(debug);
+  // Mount all components used in the project.
+  backButton.isSupported() && backButton.mount();
+  miniApp.mount();
+  themeParams.mount();
+  initData.restore();
+  void viewport.mount().catch((e) => {
+    console.error("Something went wrong mounting the viewport", e);
+  });
 
-    // Initialize Telegram SDK safely.
-    initSDK();
+  // Define components-related CSS variables.
+  viewport.bindCssVars();
+  miniApp.bindCssVars();
+  themeParams.bindCssVars();
 
-    backButton.isSupported() && backButton.mount();
-    miniApp.mount();
-    themeParams.mount();
-    initData.restore();
-
-    void viewport.mount().catch((e) => {
-      console.error("Error mounting viewport:", e);
-    });
-
-    viewport.bindCssVars();
-    miniApp.bindCssVars();
-    themeParams.bindCssVars();
-  } catch (error) {
-    console.error("🚨 Error initializing Telegram SDK:", error);
-  }
+  // Add Eruda if needed.
+  //   debug &&
+  //     import("eruda")
+  //       .then((lib) => lib.default.init())
+  //       .catch(console.error);
 }

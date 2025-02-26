@@ -34,8 +34,7 @@ export function init(debug) {
   themeParams.bindCssVars();
 
   // Add Eruda if needed.
-  //   debug &&
-  //     import("eruda")
-  //       .then((lib) => lib.default.init())
-  //       .catch(console.error);
+  // debug && import('eruda')
+  //     .then((lib) => lib.default.init())
+  //     .catch(console.error);
 }

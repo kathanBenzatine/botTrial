@@ -13,13 +13,13 @@ import Demo from "@/pages/Demo";
 import { useState } from "react";
 import axios from "axios";
 export function App() {
-  const lp = useLaunchParams();
-  const isDark = useSignal(miniApp.isDark);
+  // const lp = useLaunchParams();
+  // const isDark = useSignal(miniApp.isDark);
   const navigate = useNavigate();
   return (
     <AppRoot
-      appearance={isDark ? "dark" : "light"}
-      platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
+    // appearance={isDark ? "dark" : "light"}
+    // platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
     >
       {/* <HashRouter>
         <Routes>
