@@ -121,6 +121,54 @@ export default function Demo() {
   //   },
   // });
 
+  const handleGoogleAuth = () => {
+    const CLIENT_ID =
+      "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com";
+    const REDIRECT_URI = "http://localhost:3000/callback"; // Ensure this URI is allowed in your Google API Console
+
+    const popupWidth = 500;
+    const popupHeight = 600;
+    const left = (window.innerWidth - popupWidth) / 2;
+    const top = (window.innerHeight - popupHeight) / 2;
+
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=openid%20email%20profile`;
+
+    const popup = window.open(
+      authUrl,
+      "GoogleAuthPopup",
+      `width=${popupWidth},height=${popupHeight},top=${top},left=${left}`
+    );
+
+    const interval = setInterval(() => {
+      try {
+        if (popup.closed) {
+          clearInterval(interval);
+          console.log("Popup closed by user");
+        } else if (popup.location.href.indexOf(REDIRECT_URI) !== -1) {
+          clearInterval(interval);
+
+          const url = new URL(popup.location.href);
+          const accessToken = url.hash.split("access_token=")[1]?.split("&")[0];
+
+          if (accessToken) {
+            popup.close();
+            handleGoogleSuccess2({ accessToken });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }, 1000);
+  };
+
+  const handleGoogleSuccess2 = (credentialResponse) => {
+    console.log("Google Login Success:", credentialResponse);
+  };
+
+  const handleGoogleError = () => {
+    console.log("Google Login Failed");
+  };
+
   return (
     <div className="" style={{ textAlign: "center" }}>
       {!Loading ? (
@@ -143,14 +191,7 @@ export default function Demo() {
           >
             PAUSE
           </button>
-          {/* <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              console.log(credentialResponse);
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          /> */}
+
           <div className="google-login">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
@@ -167,6 +208,7 @@ export default function Demo() {
             >
               GOOGLE LOGIN
             </button> */}
+            <button onClick={handleGoogleAuth}>Login with Google</button>
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
