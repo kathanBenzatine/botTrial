@@ -10,9 +10,9 @@ import "./index.css";
 
 // Mock the environment in case, we are outside Telegram.
 // import "./mockEnv.js";
-import "./mockEnv2.js";
+// import "./mockEnv2.js";
 // Configure all application dependencies.
-init(retrieveLaunchParams().startParam === "debug" || import.meta.env.DEV);
+// init(retrieveLaunchParams().startParam === "debug" || import.meta.env.DEV);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
