@@ -21,13 +21,7 @@ export default function Demo() {
 
   const [getToken, setgetToken] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-  // const options = [
-  //   { id: 1, coins: 100, price: "⭐ 1" },
-  //   { id: 2, coins: 600, price: "⭐ 2" },
-  //   { id: 3, coins: 1500, price: "⭐ 3" },
-  //   { id: 4, coins: 8000, price: "⭐ 4" },
-  //   { id: 5, coins: 20000, price: "⭐ 5" },
-  // ];
+
   const [options, setoptions] = useState();
 
   useEffect(() => {
@@ -99,75 +93,6 @@ export default function Demo() {
   const handleGoogleSuccess = async (credentialResponse) => {
     console.log("Google Login Success:", credentialResponse);
   };
-  // const googleLogin = useGoogleLogin({
-  //   clientId:
-  //     "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com",
-  //   onSuccess: async (response) => {
-  //     console.log("Google Login Success:", response);
-  //     try {
-  //       const res = await axios.post("https://your-backend.com/google-login", {
-  //         token: response.credential, // Google ID Token
-  //         telegramUser: WebApp?.initDataUnsafe?.user || {}, // Send Telegram user data
-  //       });
-
-  //       console.log("Backend Response:", res.data);
-  //       WebApp?.close(); // Close Telegram WebView after login
-  //     } catch (error) {
-  //       console.error("Google Auth Error:", error);
-  //     }
-  //   },
-  //   onError: () => {
-  //     console.log("Google Login Failed");
-  //   },
-  // });
-
-  const handleGoogleAuth = () => {
-    const CLIENT_ID =
-      "836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com";
-    const REDIRECT_URI = "http://localhost:3000/callback"; // Ensure this URI is allowed in your Google API Console
-
-    const popupWidth = 500;
-    const popupHeight = 600;
-    const left = (window.innerWidth - popupWidth) / 2;
-    const top = (window.innerHeight - popupHeight) / 2;
-
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=openid%20email%20profile`;
-
-    const popup = window.open(
-      authUrl,
-      "GoogleAuthPopup",
-      `width=${popupWidth},height=${popupHeight},top=${top},left=${left}`
-    );
-
-    const interval = setInterval(() => {
-      try {
-        if (popup.closed) {
-          clearInterval(interval);
-          console.log("Popup closed by user");
-        } else if (popup.location.href.indexOf(REDIRECT_URI) !== -1) {
-          clearInterval(interval);
-
-          const url = new URL(popup.location.href);
-          const accessToken = url.hash.split("access_token=")[1]?.split("&")[0];
-
-          if (accessToken) {
-            popup.close();
-            handleGoogleSuccess2({ accessToken });
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }, 1000);
-  };
-
-  const handleGoogleSuccess2 = (credentialResponse) => {
-    console.log("Google Login Success:", credentialResponse);
-  };
-
-  const handleGoogleError = () => {
-    console.log("Google Login Failed");
-  };
 
   return (
     <div className="" style={{ textAlign: "center" }}>
@@ -200,15 +125,6 @@ export default function Demo() {
                 console.log("Google Login Failed");
               }}
             />
-
-            {/* <button
-              className=""
-              style={{ background: "black", color: "white" }}
-              onClick={() => googleLogin()}
-            >
-              GOOGLE LOGIN
-            </button> */}
-            <button onClick={handleGoogleAuth}>Login with Google</button>
           </div>
           {googleSuccess && (
             <h1 className="" style={{ color: "black" }}>
