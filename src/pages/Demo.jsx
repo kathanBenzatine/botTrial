@@ -9,7 +9,7 @@ import {
   useGoogleLogin,
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
-// import { useTelegram } from "@telegram-apps/sdk-react";
+import { isTMA } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -27,32 +27,36 @@ export default function Demo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tok = await axios.post(
-          "https://api.tontoon.app/api/user/signUp",
-          {
-            social_id:
-              WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
-            username: WebApp.initDataUnsafe.user?.username || "test_k",
-            first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-            last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
-            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-          }
-        );
-        const token = tok?.data?.body?.token;
-        setgetToken(token);
-        const response = await axios.get("https://api.tontoon.app/api/coin", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if (!isTMA()) {
+          const tok = await axios.post(
+            "https://api.tontoon.app/api/user/signUp",
+            {
+              social_id:
+                WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
+              username: WebApp.initDataUnsafe.user?.username || "test_k",
+              first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
+              last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
+              avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+            }
+          );
+          const token = tok?.data?.body?.token;
+          setgetToken(token);
+          const response = await axios.get("https://api.tontoon.app/api/coin", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        setoptions(
-          response?.data?.body?.map((item, index) => ({
-            id: item?._id,
-            coins: item.coin,
-            price: `⭐ ${item.star}`,
-          }))
-        );
+          setoptions(
+            response?.data?.body?.map((item, index) => ({
+              id: item?._id,
+              coins: item.coin,
+              price: `⭐ ${item.star}`,
+            }))
+          );
+        } else {
+          throw "is not ALLOWED IN TELE";
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
