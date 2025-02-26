@@ -9,7 +9,7 @@ import {
   useGoogleLogin,
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
-import { isTMA } from "@telegram-apps/sdk-react";
+import { isTMA } from "@telegram-apps/bridge";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -27,7 +27,7 @@ export default function Demo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!isTMA()) {
+        if (!isTMA("simple")) {
           const tok = await axios.post(
             "https://api.tontoon.app/api/user/signUp",
             {
