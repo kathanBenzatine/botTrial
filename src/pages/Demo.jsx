@@ -27,36 +27,41 @@ export default function Demo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        let tok;
         if (!isTMA("simple")) {
-          const tok = await axios.post(
-            "https://api.tontoon.app/api/user/signUp",
-            {
-              social_id:
-                WebApp?.initDataUnsafe.user?.id?.toString() || "78944561252",
-              username: WebApp.initDataUnsafe.user?.username || "test_k",
-              first_name: WebApp.initDataUnsafe.user?.first_name || "demo_k",
-              last_name: WebApp.initDataUnsafe.user?.first_name || "last_name",
-              avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-            }
-          );
-          const token = tok?.data?.body?.token;
-          setgetToken(token);
-          const response = await axios.get("https://api.tontoon.app/api/coin", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+          console.log("outside TELEGRAM ENVIRONMENT");
+          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+            social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
+            username: WebApp.initDataUnsafe.user?.username,
+            first_name: WebApp.initDataUnsafe.user?.first_name,
+            last_name: WebApp.initDataUnsafe.user?.first_name,
+            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
           });
-
-          setoptions(
-            response?.data?.body?.map((item, index) => ({
-              id: item?._id,
-              coins: item.coin,
-              price: `⭐ ${item.star}`,
-            }))
-          );
         } else {
-          console.log('throw "is not ALLOWED IN TELE";');
+          console.log("inside TELEGRAM ENVIRONMENT");
+          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+            social_id: "78944561252",
+            username: "test_k",
+            first_name: "demo_k",
+            last_name: "last_name",
+            avatar: "",
+          });
         }
+        const token = tok?.data?.body?.token;
+        setgetToken(token);
+        const response = await axios.get("https://api.tontoon.app/api/coin", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setoptions(
+          response?.data?.body?.map((item, index) => ({
+            id: item?._id,
+            coins: item.coin,
+            price: `⭐ ${item.star}`,
+          }))
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
