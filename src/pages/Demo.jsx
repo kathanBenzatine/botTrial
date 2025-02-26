@@ -55,7 +55,7 @@ export default function Demo() {
             }))
           );
         } else {
-          throw "is not ALLOWED IN TELE";
+          console.log('throw "is not ALLOWED IN TELE";');
         }
       } catch (error) {
         console.error("Error fetching data:", error);
