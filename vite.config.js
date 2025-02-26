@@ -21,6 +21,9 @@ export default defineConfig({
     host: true,
     https: false,
   },
+  esbuild: {
+    target: "esnext",
+  },
   resolve: {
     alias: {
       "@": resolve(dirname(fileURLToPath(import.meta.url)), "./src"),
