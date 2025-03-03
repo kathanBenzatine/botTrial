@@ -25,7 +25,9 @@ function ErrorBoundaryError({ error }) {
 export function Root() {
   return (
     <GoogleOAuthProvider clientId="836307284255-qucvqf3qf6ga7f5og5kgr1mqlqmbuchf.apps.googleusercontent.com">
-      <TonConnectUIProvider manifestUrl={publicUrl("tonconnect-manifest.json")}>
+      <TonConnectUIProvider
+        manifestUrl={publicUrl("../../public/tonconnect-manifest.json")}
+      >
         <BrowserRouter>
           <App />
         </BrowserRouter>

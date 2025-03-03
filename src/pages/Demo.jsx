@@ -9,8 +9,10 @@ import {
   useGoogleLogin,
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
+
 import { isTMA } from "@telegram-apps/bridge";
 import { requestPhoneAccess, requestContact } from "@telegram-apps/sdk-react";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -19,7 +21,7 @@ export default function Demo() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
-
+  const [tonConnectUI, setOptions] = useTonConnectUI();
   const [getToken, setgetToken] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -223,6 +225,10 @@ export default function Demo() {
           </Modal>
         </>
       )}
+      <header>
+        <span>My App with React UI</span>
+        <button onClick={() => tonConnectUI.openModal()}>Connect Wallet</button>
+      </header>
     </div>
   );
 }
