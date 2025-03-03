@@ -24,35 +24,6 @@ export default function Demo() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [options, setoptions] = useState();
-  async function getContact() {
-    try {
-      const status = await requestContact();
-
-      console.log("Request Contact Response:", status);
-
-      // Case 1: If contact is received immediately (Telegram Web Browser)
-      if (status?.result) {
-        const urlParams = new URLSearchParams(status.result);
-        const contactData = JSON.parse(
-          decodeURIComponent(urlParams.get("contact"))
-        );
-        console.log("Phone Number:", contactData);
-        return contactData;
-      }
-
-      // Case 2: If response is empty (Telegram Web App), listen for contact_received event
-      onEvent("contact_received", (event) => {
-        console.log("Received Event:", event);
-
-        if (event?.contact) {
-          console.log("Phone Number:", event);
-          return event;
-        }
-      });
-    } catch (error) {
-      console.error("Error requesting contact:", error);
-    }
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,8 +43,7 @@ export default function Demo() {
         } else {
           console.log("inside TELEGRAM ENVIRONMENT");
 
-          // const status = await requestContact();
-          let status = await getContact();
+          const status = await requestContact();
           console.log(status, "phone number");
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
