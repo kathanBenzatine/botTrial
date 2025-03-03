@@ -10,6 +10,7 @@ import {
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
 import { isTMA } from "@telegram-apps/bridge";
+import { requestPhoneAccess } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -30,7 +31,8 @@ export default function Demo() {
         let tok;
         if (!isTMA("simple")) {
           console.log("outside TELEGRAM ENVIRONMENT");
-
+          const status = await requestPhoneAccess();
+          console.log(status);
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: "78944561252",
             username: "test_k",
