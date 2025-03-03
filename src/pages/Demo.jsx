@@ -10,7 +10,7 @@ import {
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
 import { isTMA } from "@telegram-apps/bridge";
-import { requestPhoneAccess } from "@telegram-apps/sdk-react";
+import { requestPhoneAccess, requestContact } from "@telegram-apps/sdk-react";
 export default function Demo() {
   const [Loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -42,7 +42,7 @@ export default function Demo() {
           });
         } else {
           console.log("inside TELEGRAM ENVIRONMENT");
-          const status = await requestPhoneAccess();
+          const status = await requestContact();
           console.log(status, "phone number");
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
