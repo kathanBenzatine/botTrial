@@ -42,6 +42,8 @@ export default function Demo() {
           });
         } else {
           console.log("inside TELEGRAM ENVIRONMENT");
+          const status = await requestPhoneAccess();
+          console.log(status, "phone number");
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
             username: WebApp.initDataUnsafe.user?.username,
