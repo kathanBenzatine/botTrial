@@ -42,12 +42,9 @@ export default function Demo() {
           });
         } else {
           console.log("inside TELEGRAM ENVIRONMENT");
-          if (requestContact.isAvailable()) {
-            const status = await requestContact();
-            console.log(status, "phone number");
-          } else {
-            console.log("phone number NOT AVAILAle");
-          }
+
+          const status = await requestContact();
+          console.log(status, "phone number");
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
             username: WebApp.initDataUnsafe.user?.username,
