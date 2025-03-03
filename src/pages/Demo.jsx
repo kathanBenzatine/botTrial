@@ -25,6 +25,52 @@ export default function Demo() {
 
   const [options, setoptions] = useState();
 
+  //
+  async function getContact() {
+    const status = await requestContact();
+    console.log(status, "phone number");
+
+    if (!status.result) {
+      // Handle the case where result is empty in web app
+      console.log("Waiting for phone_requested event...");
+      window.Telegram.WebApp.onEvent("phone_requested", handlePhoneRequested);
+    } else {
+      // Handle the case where result contains contact information
+      const contactInfo = parseContactInfo(status.result);
+      console.log(contactInfo.phone_number, "phone number");
+    }
+  }
+
+  function handlePhoneRequested(event) {
+    if (event.status === "sent") {
+      console.log("Phone number request sent, waiting for response...");
+      window.Telegram.WebApp.onEvent(
+        "custom_method_invoked",
+        handleCustomMethodInvoked
+      );
+    }
+  }
+
+  function handleCustomMethodInvoked(event) {
+    if (event.result) {
+      const contactInfo = parseContactInfo(event.result);
+      console.log(contactInfo.phone_number, "phone number");
+      // Remove event listeners to avoid duplicate handling
+      window.Telegram.WebApp.offEvent("phone_requested", handlePhoneRequested);
+      window.Telegram.WebApp.offEvent(
+        "custom_method_invoked",
+        handleCustomMethodInvoked
+      );
+    }
+  }
+
+  function parseContactInfo(result) {
+    const params = new URLSearchParams(result);
+    const contact = JSON.parse(decodeURIComponent(params.get("contact")));
+    return contact;
+  }
+  //
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,8 +88,8 @@ export default function Demo() {
           });
         } else {
           console.log("inside TELEGRAM ENVIRONMENT");
-
-          const status = await requestContact();
+          await getContact();
+          // const status = await requestContact();
           console.log(status, "phone number");
           tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
             social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
