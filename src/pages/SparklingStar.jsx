@@ -11,7 +11,7 @@ const SparklingStar = ({ leftz, id, starPositions }) => {
       id: i,
       top: starPositions[i].top, // Random vertical position
       left: starPositions[i].left, // Random horizontal position
-      animationDelay: Math.random() * 2, // Random delay for twinkle effect
+      animationDelay: Math.random() * id * 1.5, // Random delay for twinkle effect
     }));
     setStars(newStars);
   }, []);
