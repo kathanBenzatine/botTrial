@@ -27,56 +27,56 @@ export default function Demo() {
 
   const [options, setoptions] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let tok;
-        if (!isTMA("simple")) {
-          console.log("outside TELEGRAM ENVIRONMENT");
-          const status = await requestPhoneAccess();
-          console.log(status);
-          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
-            social_id: "78944561252",
-            username: "test_k",
-            first_name: "demo_k",
-            last_name: "last_name",
-            avatar: "",
-          });
-        } else {
-          console.log("inside TELEGRAM ENVIRONMENT");
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       let tok;
+  //       if (!isTMA("simple")) {
+  //         console.log("outside TELEGRAM ENVIRONMENT");
+  //         const status = await requestPhoneAccess();
+  //         console.log(status);
+  //         tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+  //           social_id: "78944561252",
+  //           username: "test_k",
+  //           first_name: "demo_k",
+  //           last_name: "last_name",
+  //           avatar: "",
+  //         });
+  //       } else {
+  //         console.log("inside TELEGRAM ENVIRONMENT");
 
-          const status = await requestContact();
-          console.log(status, "phone number");
-          tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
-            social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
-            username: WebApp.initDataUnsafe.user?.username,
-            first_name: WebApp.initDataUnsafe.user?.first_name,
-            last_name: WebApp.initDataUnsafe.user?.first_name,
-            avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
-          });
-        }
-        const token = tok?.data?.body?.token;
-        setgetToken(token);
-        const response = await axios.get("https://api.tontoon.app/api/coin", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  //         const status = await requestContact();
+  //         console.log(status, "phone number");
+  //         tok = await axios.post("https://api.tontoon.app/api/user/signUp", {
+  //           social_id: WebApp?.initDataUnsafe.user?.id?.toString(),
+  //           username: WebApp.initDataUnsafe.user?.username,
+  //           first_name: WebApp.initDataUnsafe.user?.first_name,
+  //           last_name: WebApp.initDataUnsafe.user?.first_name,
+  //           avatar: WebApp?.initDataUnsafe?.user?.photo_url || "",
+  //         });
+  //       }
+  //       const token = tok?.data?.body?.token;
+  //       setgetToken(token);
+  //       const response = await axios.get("https://api.tontoon.app/api/coin", {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
 
-        setoptions(
-          response?.data?.body?.map((item, index) => ({
-            id: item?._id,
-            coins: item.coin,
-            price: `⭐ ${item.star}`,
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //       setoptions(
+  //         response?.data?.body?.map((item, index) => ({
+  //           id: item?._id,
+  //           coins: item.coin,
+  //           price: `⭐ ${item.star}`,
+  //         }))
+  //       );
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const initiatePayment = async (id) => {
     // use selected Option
