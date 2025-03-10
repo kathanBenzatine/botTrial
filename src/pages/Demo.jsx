@@ -229,6 +229,16 @@ export default function Demo() {
         <span>My App with React UI</span>
         <button onClick={() => tonConnectUI.openModal()}>Connect Wallet</button>
       </header>
+      <button
+        style={{ background: "orange" }}
+        className="
+      col-6"
+        onClick={() => {
+          navigate("/stars");
+        }}
+      >
+        PAUSE
+      </button>
     </div>
   );
 }

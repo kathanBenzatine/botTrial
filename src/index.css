@@ -55,3 +55,178 @@ body {
   font-weight: bold;
   color: #28a745;
 }
+
+/* 
+ */
+.stepper-section {
+  background: #f5f5f5;
+  height: 100vh;
+  position: relative;
+}
+.stepper-section .stepper-details-section {
+  position: absolute;
+  background-color: white;
+  /* height: 70vh; */
+  bottom: 0;
+  border-radius: 50px;
+  width: 75%;
+  overflow: auto;
+  padding: 50px 30px 50px 30px;
+  margin: 5px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 368px;
+}
+.stepper-wrap p {
+  font-size: 14.72px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+}
+.stepper-wrap h2 span {
+  color: #ffc800;
+}
+.stepper-wrap h2 {
+  font-family: var(--number-font-family);
+  font-size: 43.32px;
+  font-weight: 700;
+  line-height: 57.28px;
+  text-align: center;
+  color: #c9c9c9;
+  margin: auto;
+  margin-top: 40px;
+  background: #f4f4f4;
+  border-radius: 50px;
+  width: fit-content;
+  padding: 0px 20px;
+}
+.stepper-section .slick-dots {
+  position: relative !important;
+  bottom: 0px !important;
+  margin-top: 4px;
+  /* bottom: -100px; */
+}
+.stepper-section .slick-dots li button:before {
+  font-size: 10px;
+}
+.stepper-btn {
+  background: #f4f4f4;
+  /* width: 85%; */
+  position: fixed;
+  bottom: 20px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.09px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+  overflow: hidden;
+  max-width: var(--scree-size);
+  border: none;
+  right: 25px;
+  border-radius: 50%;
+}
+.stepper-btn .stepper-icon {
+  width: 28px;
+  height: 28px;
+  /* background-color: #ffffff; */
+  /* border-radius: 50%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stepper-btn .stepper-icon svg path {
+  stroke: #ffc800;
+}
+.stepper-section .slick-arrow.slick-prev,
+.stepper-section .slick-arrow.slick-next {
+  display: none !important;
+}
+
+.premium-user-stepper {
+  width: 50px;
+  position: relative;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #6b93ff 0%, #976fff 50%, #e46ace 100%);
+}
+/* .stepper-btn:before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  top: -180px;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  background-color: #fff;
+  animation: shiny-btn1 3s ease-in-out infinite;
+} */
+/* sparkling star */
+.star-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  /* left: -20px; */
+  pointer-events: none;
+}
+
+.sparkling-star {
+  position: absolute;
+  width: 15px; /* Adjust as needed */
+  height: 15px;
+  opacity: 0;
+  animation: sparkle 1.5s infinite;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@-webkit-keyframes shiny-btn1 {
+  0% {
+    -webkit-transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+  80% {
+    -webkit-transform: scale(0) rotate(45deg);
+    opacity: 0.5;
+  }
+  81% {
+    -webkit-transform: scale(4) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(50) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.stepper-logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 75vh);
+}
+.stepper-logo-section img {
+  max-width: 100%;
+  margin: auto;
+  width: 60px;
+  height: 60px;
+}

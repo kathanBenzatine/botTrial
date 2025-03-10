@@ -9,9 +9,10 @@ import {
 } from "react-router-dom";
 
 import { routes } from "@/navigation/routes.jsx";
-import Demo from "@/pages/Demo";
+import Demo from "../pages/Demo";
 import { useState } from "react";
 import axios from "axios";
+import Stars from "../pages/Stars";
 export function App() {
   // const lp = useLaunchParams();
   // const isDark = useSignal(miniApp.isDark);
@@ -46,6 +47,7 @@ export function App() {
             </>
           }
         />
+        <Route path="/stars" element={<Stars />} />
       </Routes>
     </AppRoot>
   );
